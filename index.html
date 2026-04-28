@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)file:///Users/goldhood/Downloads/bylingav_7.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BYLINGAV — Video Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./BYLINGAV — Video Portfolio_files/css2" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f4f0;
+    --accent: #e8e4d9;
+    --muted: #7a7972;
+    --border: rgba(245,244,240,0.12);
+    --border-strong: rgba(245,244,240,0.25);
+    --font: 'Barlow', 'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--black);
+    color: var(--white);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 3rem;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.4s, background 0.4s;
+  }
+  nav.scrolled {
+    border-color: var(--border);
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 3rem 4rem;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-bg-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  #heroCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+  }
+  .hero-top-label {
+    position: absolute;
+    top: 8rem;
+    left: 3rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .hero-top-label::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--muted);
+  }
+  .hero-headline {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .hero-headline h1 {
+    font-size: clamp(3.5rem, 9vw, 8.5rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--white);
+    opacity: 0;
+    transform: translateY(60px);
+    animation: slideUp 1s cubic-bezier(0.22,1,0.36,1) 0.3s forwards;
+  }
+  .hero-headline h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--muted);
+  }
+  .hero-sub {
+    position: relative;
+    z-index: 1;
+    margin-top: 2.5rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 1s forwards;
+  }
+  .hero-sub p {
+    max-width: 380px;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .hero-scroll {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .hero-scroll:hover { color: var(--white); }
+  .hero-scroll-line {
+    width: 1px;
+    height: 40px;
+    background: var(--muted);
+    animation: extend 1.5s ease-in-out 1.5s infinite alternate;
+  }
+
+  @keyframes slideUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  @keyframes extend {
+    to { height: 60px; }
+  }
+
+  /* SECTION COMMONS */
+  section { padding: 6rem 3rem; }
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-strong);
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: var(--white);
+  }
+
+  /* STATS BAR */
+  .stats {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0;
+  }
+  .stat-item {
+    padding: 3rem;
+    border-right: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item:hover { background: rgba(245,244,240,0.03); }
+  .stat-number {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .stat-desc {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    line-height: 1.5;
+  }
+  .stat-year {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: rgba(122,121,114,0.5);
+  }
+
+  .portfolio-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .portfolio-hint svg { opacity: 0.6; flex-shrink: 0; }
+
+  /* WORK GRID */
+  #portfolio { padding: 6rem 3rem; }
+  .work-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+  }
+  .view-all {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: color 0.2s;
+  }
+  .view-all:hover { color: var(--white); }
+  .view-all .arrow { font-size: 0.9rem; }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+  .work-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 9/16;
+    background: #111;
+    border-radius: 4px;
+    transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);
+  }
+  .work-card:hover { transform: scale(1.02); }
+  .work-card video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .work-card-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0);
+    transition: background 0.3s;
+  }
+  .work-card:hover .work-card-inner { background: rgba(0,0,0,0.3); }
+  .play-icon {
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgba(245,244,240,0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .play-icon svg { margin-left: 3px; }
+  .work-card:hover .play-icon { opacity: 1; transform: scale(1.05); }
+
+  .sound-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.6rem 0.3rem 0.45rem;
+    background: rgba(10,10,10,0.55);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(245,244,240,0.15);
+    border-radius: 999px;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.5);
+    pointer-events: none;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .sound-badge svg {
+    width: 11px;
+    height: 11px;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+  }
+  /* On hover: badge lights up to signal sound is active */
+  .work-card:hover .sound-badge {
+    color: rgba(245,244,240,0.95);
+    border-color: rgba(245,244,240,0.4);
+  }
+  .work-card:hover .sound-badge svg { opacity: 1; }
+
+  /* SERVICES */
+  #services {
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 0;
+  }
+  .services-left {
+    padding: 6rem 3rem;
+    border-right: 1px solid var(--border);
+  }
+  .services-right { padding: 6rem 3rem; }
+  .services-list { margin-top: 3rem; }
+  .service-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.8rem 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: padding 0.3s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .service-row:first-child { border-top: 1px solid var(--border); }
+  .service-row:hover { padding-left: 0.5rem; }
+  .service-row:hover .arrow-icon { transform: translate(3px, -3px); }
+  .service-name {
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--white);
+  }
+  .arrow-icon {
+    color: var(--muted);
+    font-size: 1.1rem;
+    transition: transform 0.25s;
+  }
+
+  .about-block {}
+  .about-block p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+  }
+  .about-block p strong { color: var(--white); font-weight: 400; }
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    border: 1px solid var(--border-strong);
+    padding: 0.8rem 1.6rem;
+    text-decoration: none;
+    margin-top: 1.5rem;
+    transition: background 0.2s;
+  }
+  .btn-outline:hover { background: rgba(245,244,240,0.06); }
+
+  /* TICKER */
+  .ticker {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    padding: 1.2rem 0;
+    white-space: nowrap;
+  }
+  .ticker-track {
+    display: inline-flex;
+    gap: 4rem;
+    animation: ticker 22s linear infinite;
+  }
+  .ticker-item {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .ticker-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--muted);
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* REDES */
+  #redes {
+    border-top: 1px solid var(--border);
+    padding: 7rem 3rem;
+  }
+  .redes-inner { max-width: 800px; }
+  .redes-links { margin-top: 3rem; }
+  .redes-row {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.8rem 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: padding 0.3s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .redes-row:first-child { border-top: 1px solid var(--border); }
+  .redes-row:hover { padding-left: 0.5rem; }
+  .redes-row:hover .arrow-icon { transform: translate(3px, -3px); }
+  .redes-name {
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--white);
+    min-width: 120px;
+  }
+  .redes-handle {
+    font-size: 0.9rem;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .footer-logo {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .footer-links a {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(122,121,114,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  /* CURSOR — crosshair */
+  .cursor {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    transition: transform 0.15s ease, opacity 0.2s;
+  }
+  .cursor::before,
+  .cursor::after {
+    content: '';
+    position: absolute;
+    background: var(--white);
+    mix-blend-mode: difference;
+    transition: all 0.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  /* horizontal bar */
+  .cursor::before {
+    top: 50%; left: 0;
+    width: 100%; height: 1px;
+    transform: translateY(-50%);
+  }
+  /* vertical bar */
+  .cursor::after {
+    left: 50%; top: 0;
+    width: 1px; height: 100%;
+    transform: translateX(-50%);
+  }
+  /* centre dot */
+  .cursor-dot {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 3px; height: 3px;
+    background: var(--white);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+    transition: all 0.2s;
+  }
+  .cursor.big {
+    transform: translate(-50%, -50%) rotate(45deg) scale(2.5);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero, section, #portfolio { padding: 4rem 1.5rem; }
+    .hero { padding: 0 1.5rem 3rem; }
+    .hero-top-label { left: 1.5rem; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat-item { padding: 2rem 1.5rem; border-bottom: 1px solid var(--border); }
+    .portfolio-hint { display: none; }
+    .work-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .work-card:nth-child(n) { grid-column: span 1; }
+    #redes { padding: 4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor" style="left: 1530px; top: 308px;"><div class="cursor-dot"></div></div>
+
+<!-- NAV -->
+<nav id="navbar" class="">
+  <a href="file:///Users/goldhood/Downloads/bylingav_7.html#home" class="nav-logo">BYLINGAV</a>
+  <ul class="nav-links">
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_7.html#home">Home</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_7.html#portfolio">Portfolio</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_7.html#redes">Redes</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-grid"><canvas id="heroCanvas" width="1905" height="865"></canvas></div>
+  <div class="hero-top-label">Dirección &amp; Producción Audiovisual</div>
+  <div class="hero-headline">
+    <h1>Content creator<br><em>based in</em><br>Málaga.</h1>
+  </div>
+  <div class="hero-sub">
+    <p>Cuento historias con imágenes. Desde Málaga, con toda la luz del sur y las ganas de llegar lejos.</p>
+    <a href="file:///Users/goldhood/Downloads/bylingav_7.html#portfolio" class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      Explorar trabajo
+    </a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats" style="grid-template-columns: repeat(2, 1fr);">
+  <div class="stat-item" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s, transform 0.6s;">
+    <div class="stat-number">+10</div>
+    <div class="stat-desc">Años de experiencia<br>creando contenido</div>
+  </div>
+  <div class="stat-item" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s, transform 0.6s;">
+    <div class="stat-number">+30</div>
+    <div class="stat-desc">Clientes satisfechos<br>que confían en mí</div>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<div id="portfolio">
+  <div class="work-header">
+    <div>
+      <div class="section-label">Mi trabajo</div>
+      <h2 class="section-title">Proyectos recientes</h2>
+    </div>
+    <span class="portfolio-hint">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>
+      Pasa el cursor por encima para ver el vídeo
+    </span>
+  </div>
+  <div class="work-grid">
+
+    <div class="work-card">
+      <video src="videos/video_01.mp4" loop="" muted="" playsinline="" preload="metadata" data-sound="true"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div>
+      <div class="sound-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>Sonido</div>
+    </div>
+    
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_02.mp4" loop="" muted="" playsinline="" preload="metadata" data-sound="true"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div>
+      <div class="sound-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>Sonido</div>
+    </div>
+    
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_03.mp4" loop="" playsinline="" preload="metadata" data-sound="true"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div>
+      <div class="sound-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>Sonido</div>
+    </div>
+    
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_04.mp4" loop="" muted="" playsinline="" preload="metadata"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div></div>
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_05.mp4" loop="" muted="" playsinline="" preload="metadata"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div></div>
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_06.mp4" loop="" muted="" playsinline="" preload="metadata"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div></div>
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_07.mp4" loop="" muted="" playsinline="" preload="metadata"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div></div>
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_08.mp4" loop="" muted="" playsinline="" preload="metadata"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div></div>
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_09.mp4" loop="" muted="" playsinline="" preload="metadata" data-sound="true"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div>
+      <div class="sound-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>Sonido</div>
+    </div>
+    
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_10.mp4" loop="" muted="" playsinline="" preload="metadata"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div></div>
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_11.mp4" loop="" muted="" playsinline="" preload="metadata"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div></div>
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_12.mp4" loop="" muted="" playsinline="" preload="metadata"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div></div>
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_13.mp4" loop="" muted="" playsinline="" preload="metadata" data-sound="true"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div>
+      <div class="sound-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>Sonido</div>
+    </div>
+    
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_14.mp4" loop="" muted="" playsinline="" preload="metadata"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div></div>
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_15.mp4" loop="" muted="" playsinline="" preload="metadata" data-sound="true"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div>
+      <div class="sound-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>Sonido</div>
+    </div>
+    
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_16.mp4" loop="" muted="" playsinline="" preload="metadata"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div></div>
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_17.mp4" loop="" muted="" playsinline="" preload="metadata" data-sound="true"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div>
+      <div class="sound-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>Sonido</div>
+    </div>
+    
+    </div>
+
+    <div class="work-card">
+      <video src="videos/video_18.mp4" loop="" muted="" playsinline="" preload="metadata"></video>
+      <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- REDES -->
+<div id="redes">
+  <div class="redes-inner">
+    <div class="section-label">Sígueme</div>
+    <h2 class="section-title">Encuéntrame<br>en redes</h2>
+    <div class="redes-links">
+      <a href="https://instagram.com/bylingav" target="_blank" class="redes-row">
+        <span class="redes-name">Instagram</span>
+        <span class="redes-handle">@bylingav</span>
+        <span class="arrow-icon">↗</span>
+      </a>
+      <a href="https://linkedin.com/in/alvaro-linares-gaviero" target="_blank" class="redes-row">
+        <span class="redes-name">LinkedIn</span>
+        <span class="redes-handle">linkedin.com/in/alvaro-linares-gaviero</span>
+        <span class="arrow-icon">↗</span>
+      </a>
+      <a href="mailto:alvarolinaresgaviero@gmail.com" class="redes-row">
+        <span class="redes-name">Contáctame</span>
+        <span class="redes-handle">alvarolinaresgaviero@gmail.com</span>
+        <span class="arrow-icon">↗</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">BYLINGAV</div>
+  <ul class="footer-links">
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_7.html#home">Home</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_7.html#portfolio">Portfolio</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_7.html#redes">Redes</a></li>
+  </ul>
+  <div class="footer-copy">©BYLINGAV 2025</div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+  let cursorX = mouseX, cursorY = mouseY;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // Smooth cursor follow
+  function animateCursor() {
+    cursorX += (mouseX - cursorX) * 0.12;
+    cursorY += (mouseY - cursorY) * 0.12;
+    cursor.style.left = cursorX + 'px';
+    cursor.style.top  = cursorY + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  // Hero canvas gradient
+  const canvas = document.getElementById('heroCanvas');
+  const ctx = canvas.getContext('2d');
+  const hero = document.querySelector('.hero');
+  let heroMx = 0.5, heroMy = 0.5;
+  let t = 0;
+
+  function resizeCanvas() {
+    canvas.width  = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  hero.addEventListener('mousemove', e => {
+    const r = hero.getBoundingClientRect();
+    heroMx = (e.clientX - r.left) / r.width;
+    heroMy = (e.clientY - r.top)  / r.height;
+  });
+
+  function drawCanvas() {
+    t += 0.004;
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    // Slowly drifting orbs
+    const orbs = [
+      { x: 0.2 + Math.sin(t * 0.7) * 0.12, y: 0.3 + Math.cos(t * 0.5) * 0.1,  r: 0.55, c: 'rgba(60,60,60,0.55)' },
+      { x: 0.75 + Math.cos(t * 0.6) * 0.1, y: 0.6 + Math.sin(t * 0.8) * 0.12, r: 0.45, c: 'rgba(35,35,35,0.5)'  },
+      { x: 0.5  + Math.sin(t * 0.4) * 0.08, y: 0.15 + Math.cos(t * 0.9) * 0.08, r: 0.4, c: 'rgba(80,80,80,0.4)' },
+      // cursor-reactive orb
+      { x: heroMx, y: heroMy, r: 0.35, c: 'rgba(110,110,110,0.35)' },
+    ];
+
+    orbs.forEach(o => {
+      const cx = o.x * w, cy = o.y * h;
+      const rad = o.r * Math.max(w, h);
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
+      g.addColorStop(0, o.c);
+      g.addColorStop(1, 'transparent');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, w, h);
+    });
+
+    requestAnimationFrame(drawCanvas);
+  }
+  drawCanvas();
+  document.querySelectorAll('a, button, .work-card').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+  });
+
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Videos: thumbnail at s5, play from 0 on hover
+  const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
+
+  document.querySelectorAll('.work-card').forEach(card => {
+    const video = card.querySelector('video');
+    if (!video) return;
+    const hasSound = video.dataset.sound === 'true';
+
+    video.loop = true;
+    video.muted = true;
+
+    if (isMobile()) {
+      // Mobile: autoplay from start, no thumbnail trick needed
+      video.play().catch(() => {});
+    } else {
+      // Seek to s5 to show thumbnail, then pause there
+      video.addEventListener('loadedmetadata', () => {
+        video.currentTime = 5;
+      });
+      // Once seeked to s5, pause — this freezes the frame as the visual
+      video.addEventListener('seeked', function onSeeked() {
+        if (!video.dataset.playing) {
+          video.pause();
+        }
+      });
+
+      card.addEventListener('mouseenter', () => {
+        video.dataset.playing = 'true';
+        video.currentTime = 0; // always start from frame 1
+        if (hasSound) {
+          video.removeAttribute('muted');
+          video.muted = false;
+        }
+        video.play().catch(() => {});
+      });
+
+      card.addEventListener('mouseleave', () => {
+        delete video.dataset.playing;
+        video.muted = true;
+        video.pause();
+        video.currentTime = 5; // return to thumbnail frame
+      });
+    }
+  });
+
+  document.querySelectorAll('.stat-item, .service-row').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+
+
+</body></html>
