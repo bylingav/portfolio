@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///Users/goldhood/Downloads/bylingav_5.html -->
+<!-- saved from url=(0049)file:///Users/goldhood/Downloads/bylingav_19.html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +38,7 @@
     z-index: 100;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 1.5rem 3rem;
     border-bottom: 1px solid transparent;
     transition: border-color 0.4s, background 0.4s;
@@ -56,28 +56,13 @@
     color: var(--white);
     text-decoration: none;
   }
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--white); }
   /* HERO */
   .hero {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 0 3rem 4rem;
+    padding: 0 3rem 3rem;
     position: relative;
     border-bottom: 1px solid var(--border);
   }
@@ -94,24 +79,24 @@
     height: 100%;
     opacity: 0.6;
   }
-  .hero-top-label {
-    position: absolute;
-    top: 8rem;
-    left: 3rem;
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
+  .scroll-arrow {
+    position: relative;
+    z-index: 1;
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    justify-content: center;
+    margin-top: 3rem;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 1.4s forwards;
   }
-  .hero-top-label::before {
-    content: '';
-    display: block;
-    width: 30px;
-    height: 1px;
-    background: var(--muted);
+  .scroll-arrow svg {
+    width: 28px;
+    height: 28px;
+    color: var(--muted);
+    animation: bounce 2s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); opacity: 0.5; }
+    50%       { transform: translateY(6px); opacity: 1; }
   }
   .hero-headline {
     position: relative;
@@ -152,35 +137,12 @@
     color: var(--muted);
     line-height: 1.7;
   }
-  .hero-scroll {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .hero-scroll:hover { color: var(--white); }
-  .hero-scroll-line {
-    width: 1px;
-    height: 40px;
-    background: var(--muted);
-    animation: extend 1.5s ease-in-out 1.5s infinite alternate;
-  }
-
   @keyframes slideUp {
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes fadeIn {
     to { opacity: 1; }
   }
-  @keyframes extend {
-    to { height: 60px; }
-  }
-
   /* SECTION COMMONS */
   section { padding: 6rem 3rem; }
   .section-label {
@@ -290,8 +252,9 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    aspect-ratio: 9/16;
-    background: #111;
+    aspect-ratio: 9 / 16;
+    width: 100%;
+    background: #0a0a0a;
     border-radius: 4px;
     transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), filter 0.4s ease;
     filter: brightness(0.4);
@@ -344,22 +307,18 @@
     font-size: 0.6rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(245,244,240,0.5);
+    color: rgba(245,244,240,0.6);
     pointer-events: none;
-    transition: color 0.3s, border-color 0.3s;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    opacity: 1;
   }
-  .sound-badge svg {
-    width: 11px;
-    height: 11px;
-    opacity: 0.5;
-    transition: opacity 0.3s;
+  .sound-badge svg { width: 11px; height: 11px; }
+  .work-card:hover .sound-badge,
+  .work-card.hovered .sound-badge,
+  .work-card.video-zoomed .sound-badge {
+    opacity: 0;
+    transform: scale(0.85);
   }
-  /* On hover: badge lights up to signal sound is active */
-  .work-card:hover .sound-badge {
-    color: rgba(245,244,240,0.95);
-    border-color: rgba(245,244,240,0.4);
-  }
-  .work-card:hover .sound-badge svg { opacity: 1; }
 
   /* SERVICES */
   #services {
@@ -496,9 +455,11 @@
     border-top: 1px solid var(--border);
     padding: 3rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
+    justify-content: center;
+    gap: 0.75rem;
+    text-align: center;
   }
   .footer-logo {
     font-size: 0.9rem;
@@ -573,7 +534,67 @@
     opacity: 0.6;
   }
 
+  /* MOBILE VIDEO LIGHTBOX */
+  .video-overlay {
+    display: none;
+  }
+  .volver-btn {
+    display: none;
+  }
   @media (max-width: 900px) {
+    .video-overlay {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0);
+      z-index: 999;
+      pointer-events: none;
+      transition: background 0.4s ease;
+    }
+    .video-overlay.active {
+      background: rgba(0,0,0,0.75);
+      pointer-events: auto;
+    }
+    .video-zoomed {
+      position: fixed !important;
+      z-index: 1000;
+      border-radius: 10px;
+      filter: brightness(1) !important;
+      transition:
+        top 0.45s cubic-bezier(0.22,1,0.36,1),
+        left 0.45s cubic-bezier(0.22,1,0.36,1),
+        width 0.45s cubic-bezier(0.22,1,0.36,1),
+        height 0.45s cubic-bezier(0.22,1,0.36,1),
+        border-radius 0.45s ease;
+    }
+    .volver-btn {
+      display: block;
+      position: fixed;
+      top: 1.2rem;
+      right: 1.2rem;
+      z-index: 1001;
+      background: rgba(10,10,10,0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(245,244,240,0.25);
+      color: var(--white);
+      font-family: var(--font);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .volver-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
     nav { padding: 1.2rem 1.5rem; }
     .nav-links { display: none; }
     .hero, section, #portfolio { padding: 4rem 1.5rem; }
@@ -589,16 +610,8 @@
     #redes { padding: 4rem 1.5rem; }
     .redes-row { gap: 0.75rem; }
     .redes-handle { font-size: 0.75rem; word-break: break-all; }
-    footer {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 2rem 1.5rem;
-      gap: 1rem;
-    }
-    .footer-links {
-      flex-wrap: wrap;
-      gap: 1rem 1.5rem;
-    }
+    footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; gap: 1rem; }
+    .footer-links { flex-wrap: wrap; gap: 1rem 1.5rem; }
     .cursor { display: none; }
     * { cursor: auto !important; }
   }
@@ -606,41 +619,36 @@
 </head>
 <body>
 
-<div class="cursor" id="cursor" style="left: 1330px; top: 600px;"><div class="cursor-dot"></div></div>
+<div class="cursor" id="cursor" style="left: 1306.08px; top: 298.16px;"><div class="cursor-dot"></div></div>
+<div class="video-overlay" id="videoOverlay"></div>
+<button class="volver-btn" id="volverBtn">← Volver</button>
 
 <!-- NAV -->
-<nav id="navbar">
-  <a href="file:///Users/goldhood/Downloads/bylingav_5.html#home" class="nav-logo">BYLINGAV</a>
-  <ul class="nav-links">
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_5.html#home">Home</a></li>
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_5.html#portfolio">Portfolio</a></li>
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_5.html#redes">Redes</a></li>
-  </ul>
+<nav id="navbar" class="">
+  <a href="file:///Users/goldhood/Downloads/bylingav_19.html#" class="nav-logo" id="navLogo">BYLINGAV</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-bg-grid"><canvas id="heroCanvas" width="1905" height="865"></canvas></div>
-  <div class="hero-top-label">Dirección &amp; Producción Audiovisual</div>
   <div class="hero-headline">
     <h1>Content creator<br><em>based in</em><br>Málaga.</h1>
   </div>
   <div class="hero-sub">
     <p>Cuento historias con imágenes. Desde Málaga, con toda la luz del sur y las ganas de llegar lejos.</p>
-    <a href="file:///Users/goldhood/Downloads/bylingav_5.html#portfolio" class="hero-scroll">
-      <div class="hero-scroll-line"></div>
-      Explorar trabajo
-    </a>
+  </div>
+  <div class="scroll-arrow" aria-label="Scroll hacia abajo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><line x1="12" y1="4" x2="12" y2="20"></line><polyline points="6 14 12 20 18 14"></polyline></svg>
   </div>
 </section>
 
 <!-- STATS -->
 <div class="stats" style="grid-template-columns: repeat(2, 1fr);">
-  <div class="stat-item" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+  <div class="stat-item" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s, transform 0.6s;">
     <div class="stat-number">+10</div>
     <div class="stat-desc">Años de experiencia<br>creando contenido</div>
   </div>
-  <div class="stat-item" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+  <div class="stat-item" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s, transform 0.6s;">
     <div class="stat-number">+30</div>
     <div class="stat-desc">Clientes satisfechos<br>que confían en mí</div>
   </div>
@@ -803,11 +811,6 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">BYLINGAV</div>
-  <ul class="footer-links">
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_5.html#home">Home</a></li>
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_5.html#portfolio">Portfolio</a></li>
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_5.html#redes">Redes</a></li>
-  </ul>
   <div class="footer-copy">©BYLINGAV 2026</div>
 </footer>
 
@@ -888,12 +891,12 @@
     navbar.classList.toggle('scrolled', window.scrollY > 60);
   });
 
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
-    });
+  document.getElementById('navLogo').addEventListener('click', e => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  // smooth scroll handled by CSS scroll-behavior: smooth on html
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -906,6 +909,31 @@
 
   // Videos: thumbnail at s5, play from 0 on hover (desktop) / touch (mobile)
   const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
+
+  const overlay = document.getElementById('videoOverlay');
+  const volverBtn = document.getElementById('volverBtn');
+
+  function closeZoom() {
+    const zoomed = document.querySelector('.work-card.video-zoomed');
+    if (!zoomed) return;
+    // Mute sound on close
+    document.querySelectorAll('.work-card video[data-sound="true"]').forEach(v => { v.muted = true; });
+    overlay.classList.remove('active');
+    volverBtn.classList.remove('visible');
+    // Animate back to original position
+    zoomed.style.top    = zoomed.dataset.origTop  + 'px';
+    zoomed.style.left   = zoomed.dataset.origLeft + 'px';
+    zoomed.style.width  = zoomed.dataset.origW    + 'px';
+    zoomed.style.height = zoomed.dataset.origH    + 'px';
+    zoomed.style.borderRadius = '4px';
+    zoomed.addEventListener('transitionend', () => {
+      zoomed.classList.remove('video-zoomed');
+      zoomed.style.cssText = ''; // clear all inline styles
+    }, { once: true });
+  }
+
+  overlay.addEventListener('click', closeZoom);
+  volverBtn.addEventListener('click', closeZoom);
 
   // Scroll-driven orb position for mobile canvas
   window.addEventListener('scroll', () => {
@@ -924,43 +952,93 @@
     video.muted = true;
 
     if (isMobile()) {
-      // Mobile: autoplay muted; tap restarts + toggles brightness + sound
       video.play().catch(() => {});
-      card.addEventListener('touchstart', () => {
-        card.classList.add('touched');
+
+      // Resume if scroll interrupted autoplay
+      const resumeObserver = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) video.play().catch(() => {}); });
+      }, { threshold: 0.1 });
+      resumeObserver.observe(card);
+
+      card.addEventListener('click', () => {
+        if (card.classList.contains('video-zoomed')) return;
+
+        // Restart
         video.currentTime = 0;
         video.play().catch(() => {});
-      }, { passive: true });
-      card.addEventListener('touchend', () => {
-        setTimeout(() => card.classList.remove('touched'), 400);
-      }, { passive: true });
 
-      if (hasSound) {
-        card.addEventListener('click', () => {
-          if (video.muted) {
-            // Unmute this card, mute all others with sound
-            document.querySelectorAll('.work-card video[data-sound="true"]').forEach(v => {
-              v.muted = true;
-            });
-            video.removeAttribute('muted');
-            video.muted = false;
-          } else {
-            video.muted = true;
-          }
+        // Activate sound on open
+        if (hasSound) {
+          document.querySelectorAll('.work-card video[data-sound="true"]').forEach(v => { v.muted = true; });
+          video.removeAttribute('muted');
+          video.muted = false;
+        }
+
+        // Zoom: less aggressive, bigger margin
+        const rect = card.getBoundingClientRect();
+        const margin = 55;
+        const maxW = window.innerWidth - margin * 2;
+        const maxH = window.innerHeight - margin * 2;
+        let zW = maxW;
+        let zH = zW * (16 / 9);
+        if (zH > maxH) { zH = maxH; zW = zH * (9 / 16); }
+        const zL = (window.innerWidth - zW) / 2;
+        const zT = (window.innerHeight - zH) / 2;
+
+        card.style.transition = 'none';
+        card.style.position = 'fixed';
+        card.style.top = rect.top + 'px';
+        card.style.left = rect.left + 'px';
+        card.style.width = rect.width + 'px';
+        card.style.height = rect.height + 'px';
+
+        card.classList.add('video-zoomed');
+        overlay.classList.add('active');
+        volverBtn.classList.add('visible');
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            card.style.transition = '';
+            card.style.top = zT + 'px';
+            card.style.left = zL + 'px';
+            card.style.width = zW + 'px';
+            card.style.height = zH + 'px';
+          });
         });
-      }
+
+        card.dataset.origTop = rect.top;
+        card.dataset.origLeft = rect.left;
+        card.dataset.origW = rect.width;
+        card.dataset.origH = rect.height;
+      });
     } else {
-      // Desktop: seek to s5 for thumbnail
-      video.addEventListener('loadedmetadata', () => {
+      // Desktop: generate poster thumbnail via canvas at s5, then no seeked listener
+      let posterSet = false;
+
+      video.addEventListener('loadeddata', () => {
+        if (posterSet) return;
+        posterSet = true;
+        // Seek briefly to s5 to capture frame, then immediately pause
         video.currentTime = 5;
-      });
-      video.addEventListener('seeked', () => {
-        if (!video.dataset.playing) video.pause();
-      });
+        // Use a one-time seeked to grab the frame and stop — then remove itself
+        const grabFrame = () => {
+          video.pause();
+          try {
+            const c = document.createElement('canvas');
+            c.width = video.videoWidth || 200;
+            c.height = video.videoHeight || 356;
+            c.getContext('2d').drawImage(video, 0, 0, c.width, c.height);
+            video.setAttribute('poster', c.toDataURL('image/jpeg', 0.7));
+          } catch(e) {
+            // cross-origin or codec issue — just leave paused at s5
+          }
+          video.removeEventListener('seeked', grabFrame);
+        };
+        video.addEventListener('seeked', grabFrame);
+      }, { once: true });
 
       card.addEventListener('mouseenter', () => {
         card.classList.add('hovered');
-        video.dataset.playing = 'true';
         video.currentTime = 0;
         if (hasSound) {
           video.removeAttribute('muted');
@@ -971,7 +1049,6 @@
 
       card.addEventListener('mouseleave', () => {
         card.classList.remove('hovered');
-        delete video.dataset.playing;
         video.muted = true;
         video.pause();
         video.currentTime = 5;
