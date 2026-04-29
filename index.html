@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///Users/goldhood/Downloads/bylingav_1.html -->
+<!-- saved from url=(0048)file:///Users/goldhood/Downloads/bylingav_5.html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BYLINGAV — Motion Graphics Portfolio</title>
+<title>BYLINGAV - Motion Graphics Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
 <link href="./index_files/css2" rel="stylesheet">
@@ -20,7 +20,7 @@
     --font: 'Barlow', 'Inter', sans-serif;
   }
 
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
 
   body {
     font-family: var(--font);
@@ -293,9 +293,12 @@
     aspect-ratio: 9/16;
     background: #111;
     border-radius: 4px;
-    transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);
+    transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), filter 0.4s ease;
+    filter: brightness(0.4);
   }
-  .work-card:hover { transform: scale(1.02); }
+  .work-card:hover,
+  .work-card.hovered,
+  .work-card.touched { transform: scale(1.02); filter: brightness(1) !important; }
   .work-card video {
     position: absolute;
     inset: 0;
@@ -310,10 +313,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0);
-    transition: background 0.3s;
+    pointer-events: none;
   }
-  .work-card:hover .work-card-inner { background: rgba(0,0,0,0.3); }
   .play-icon {
     width: 50px;
     height: 50px;
@@ -586,6 +587,18 @@
     .work-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
     .work-card:nth-child(n) { grid-column: span 1; }
     #redes { padding: 4rem 1.5rem; }
+    .redes-row { gap: 0.75rem; }
+    .redes-handle { font-size: 0.75rem; word-break: break-all; }
+    footer {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 2rem 1.5rem;
+      gap: 1rem;
+    }
+    .footer-links {
+      flex-wrap: wrap;
+      gap: 1rem 1.5rem;
+    }
     .cursor { display: none; }
     * { cursor: auto !important; }
   }
@@ -593,15 +606,15 @@
 </head>
 <body>
 
-<div class="cursor" id="cursor" style="left: 979.84px; top: 286.92px;"><div class="cursor-dot"></div></div>
+<div class="cursor" id="cursor" style="left: 1330px; top: 600px;"><div class="cursor-dot"></div></div>
 
 <!-- NAV -->
-<nav id="navbar" class="">
-  <a href="file:///Users/goldhood/Downloads/bylingav_1.html#home" class="nav-logo">BYLINGAV</a>
+<nav id="navbar">
+  <a href="file:///Users/goldhood/Downloads/bylingav_5.html#home" class="nav-logo">BYLINGAV</a>
   <ul class="nav-links">
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_1.html#home">Home</a></li>
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_1.html#portfolio">Portfolio</a></li>
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_1.html#redes">Redes</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_5.html#home">Home</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_5.html#portfolio">Portfolio</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_5.html#redes">Redes</a></li>
   </ul>
 </nav>
 
@@ -614,7 +627,7 @@
   </div>
   <div class="hero-sub">
     <p>Cuento historias con imágenes. Desde Málaga, con toda la luz del sur y las ganas de llegar lejos.</p>
-    <a href="file:///Users/goldhood/Downloads/bylingav_1.html#portfolio" class="hero-scroll">
+    <a href="file:///Users/goldhood/Downloads/bylingav_5.html#portfolio" class="hero-scroll">
       <div class="hero-scroll-line"></div>
       Explorar trabajo
     </a>
@@ -623,11 +636,11 @@
 
 <!-- STATS -->
 <div class="stats" style="grid-template-columns: repeat(2, 1fr);">
-  <div class="stat-item" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s, transform 0.6s;">
+  <div class="stat-item" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
     <div class="stat-number">+10</div>
     <div class="stat-desc">Años de experiencia<br>creando contenido</div>
   </div>
-  <div class="stat-item" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s, transform 0.6s;">
+  <div class="stat-item" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
     <div class="stat-number">+30</div>
     <div class="stat-desc">Clientes satisfechos<br>que confían en mí</div>
   </div>
@@ -665,7 +678,7 @@
     </div>
 
     <div class="work-card">
-      <video src="videos/video_03.mp4" loop="" playsinline="" preload="metadata" data-sound="true"></video>
+      <video src="videos/video_03.mp4" loop="" muted="" playsinline="" preload="metadata" data-sound="true"></video>
       <div class="work-card-inner"><div class="play-icon"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="white" fill-opacity="0.8"></path></svg></div>
       <div class="sound-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>Sonido</div>
     </div>
@@ -791,9 +804,9 @@
 <footer>
   <div class="footer-logo">BYLINGAV</div>
   <ul class="footer-links">
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_1.html#home">Home</a></li>
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_1.html#portfolio">Portfolio</a></li>
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_1.html#redes">Redes</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_5.html#home">Home</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_5.html#portfolio">Portfolio</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_5.html#redes">Redes</a></li>
   </ul>
   <div class="footer-copy">©BYLINGAV 2026</div>
 </footer>
@@ -911,8 +924,16 @@
     video.muted = true;
 
     if (isMobile()) {
-      // Mobile: autoplay muted; tap toggles sound on/off
+      // Mobile: autoplay muted; tap restarts + toggles brightness + sound
       video.play().catch(() => {});
+      card.addEventListener('touchstart', () => {
+        card.classList.add('touched');
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      }, { passive: true });
+      card.addEventListener('touchend', () => {
+        setTimeout(() => card.classList.remove('touched'), 400);
+      }, { passive: true });
 
       if (hasSound) {
         card.addEventListener('click', () => {
@@ -938,6 +959,7 @@
       });
 
       card.addEventListener('mouseenter', () => {
+        card.classList.add('hovered');
         video.dataset.playing = 'true';
         video.currentTime = 0;
         if (hasSound) {
@@ -948,6 +970,7 @@
       });
 
       card.addEventListener('mouseleave', () => {
+        card.classList.remove('hovered');
         delete video.dataset.playing;
         video.muted = true;
         video.pause();
