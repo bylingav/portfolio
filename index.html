@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///Users/goldhood/Downloads/bylingav_7.html -->
+<!-- saved from url=(0048)file:///Users/goldhood/Downloads/bylingav_1.html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BYLINGAV — Video Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-<link href="./BYLINGAV — Video Portfolio_files/css2" rel="stylesheet">
+<link href="./index_files/css2" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -322,11 +322,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s, transform 0.3s;
   }
   .play-icon svg { margin-left: 3px; }
-  .work-card:hover .play-icon { opacity: 1; transform: scale(1.05); }
+  .work-card:hover .play-icon { opacity: 0; transform: scale(0.8); }
 
   .sound-badge {
     position: absolute;
@@ -580,24 +580,28 @@
     .hero-top-label { left: 1.5rem; }
     .stats { grid-template-columns: repeat(2, 1fr); }
     .stat-item { padding: 2rem 1.5rem; border-bottom: 1px solid var(--border); }
-    .portfolio-hint { display: none; }
+    .portfolio-hint { display: flex; }
+    .portfolio-hint .hint-desktop { display: none; }
+    .portfolio-hint .hint-mobile { display: inline; }
     .work-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
     .work-card:nth-child(n) { grid-column: span 1; }
     #redes { padding: 4rem 1.5rem; }
+    .cursor { display: none; }
+    * { cursor: auto !important; }
   }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor" style="left: 1530px; top: 308px;"><div class="cursor-dot"></div></div>
+<div class="cursor" id="cursor" style="left: 979.84px; top: 286.92px;"><div class="cursor-dot"></div></div>
 
 <!-- NAV -->
 <nav id="navbar" class="">
-  <a href="file:///Users/goldhood/Downloads/bylingav_7.html#home" class="nav-logo">BYLINGAV</a>
+  <a href="file:///Users/goldhood/Downloads/bylingav_1.html#home" class="nav-logo">BYLINGAV</a>
   <ul class="nav-links">
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_7.html#home">Home</a></li>
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_7.html#portfolio">Portfolio</a></li>
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_7.html#redes">Redes</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_1.html#home">Home</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_1.html#portfolio">Portfolio</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_1.html#redes">Redes</a></li>
   </ul>
 </nav>
 
@@ -610,7 +614,7 @@
   </div>
   <div class="hero-sub">
     <p>Cuento historias con imágenes. Desde Málaga, con toda la luz del sur y las ganas de llegar lejos.</p>
-    <a href="file:///Users/goldhood/Downloads/bylingav_7.html#portfolio" class="hero-scroll">
+    <a href="file:///Users/goldhood/Downloads/bylingav_1.html#portfolio" class="hero-scroll">
       <div class="hero-scroll-line"></div>
       Explorar trabajo
     </a>
@@ -638,7 +642,8 @@
     </div>
     <span class="portfolio-hint">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>
-      Pasa el cursor por encima para ver el vídeo
+      <span class="hint-desktop">Pasa el cursor por encima para ver el vídeo</span>
+      <span class="hint-mobile">Toca un vídeo para reproducirlo con sonido · toca de nuevo para silenciar</span>
     </span>
   </div>
   <div class="work-grid">
@@ -786,9 +791,9 @@
 <footer>
   <div class="footer-logo">BYLINGAV</div>
   <ul class="footer-links">
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_7.html#home">Home</a></li>
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_7.html#portfolio">Portfolio</a></li>
-    <li><a href="file:///Users/goldhood/Downloads/bylingav_7.html#redes">Redes</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_1.html#home">Home</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_1.html#portfolio">Portfolio</a></li>
+    <li><a href="file:///Users/goldhood/Downloads/bylingav_1.html#redes">Redes</a></li>
   </ul>
   <div class="footer-copy">©BYLINGAV 2025</div>
 </footer>
@@ -886,8 +891,16 @@
     });
   }, { threshold: 0.1 });
 
-  // Videos: thumbnail at s5, play from 0 on hover
+  // Videos: thumbnail at s5, play from 0 on hover (desktop) / touch (mobile)
   const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
+
+  // Scroll-driven orb position for mobile canvas
+  window.addEventListener('scroll', () => {
+    if (isMobile()) {
+      heroMy = Math.min(1, window.scrollY / (hero.offsetHeight || 1));
+      heroMx = 0.5;
+    }
+  });
 
   document.querySelectorAll('.work-card').forEach(card => {
     const video = card.querySelector('video');
@@ -898,23 +911,35 @@
     video.muted = true;
 
     if (isMobile()) {
-      // Mobile: autoplay from start, no thumbnail trick needed
+      // Mobile: autoplay muted; tap toggles sound on/off
       video.play().catch(() => {});
+
+      if (hasSound) {
+        card.addEventListener('click', () => {
+          if (video.muted) {
+            // Unmute this card, mute all others with sound
+            document.querySelectorAll('.work-card video[data-sound="true"]').forEach(v => {
+              v.muted = true;
+            });
+            video.removeAttribute('muted');
+            video.muted = false;
+          } else {
+            video.muted = true;
+          }
+        });
+      }
     } else {
-      // Seek to s5 to show thumbnail, then pause there
+      // Desktop: seek to s5 for thumbnail
       video.addEventListener('loadedmetadata', () => {
         video.currentTime = 5;
       });
-      // Once seeked to s5, pause — this freezes the frame as the visual
-      video.addEventListener('seeked', function onSeeked() {
-        if (!video.dataset.playing) {
-          video.pause();
-        }
+      video.addEventListener('seeked', () => {
+        if (!video.dataset.playing) video.pause();
       });
 
       card.addEventListener('mouseenter', () => {
         video.dataset.playing = 'true';
-        video.currentTime = 0; // always start from frame 1
+        video.currentTime = 0;
         if (hasSound) {
           video.removeAttribute('muted');
           video.muted = false;
@@ -926,7 +951,7 @@
         delete video.dataset.playing;
         video.muted = true;
         video.pause();
-        video.currentTime = 5; // return to thumbnail frame
+        video.currentTime = 5;
       });
     }
   });
